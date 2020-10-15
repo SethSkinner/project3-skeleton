@@ -22,9 +22,8 @@ app.use(session({
     saveUninitialized: false
 }));
 
-app.use(express.static(__dirname + "/public"));
+app.use(express.static("client/build"));
 
-app.use("*", express.static(__dirname + "/public/index.html"));
 
 io.on("connection", function(socket){
     console.log(`\nPlayer ${socket.id} has been connected\n`);

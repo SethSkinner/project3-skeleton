@@ -1,5 +1,5 @@
-
-const CARD_WIDTH = 204;
+// const IMAGE_SIZE = 2048;
+const CARD_WIDTH = 204.8;
 const CARD_HEIGHT = 292;
 
 const RED = "red";
@@ -30,17 +30,17 @@ function card_names(){
 
 	/* zero cards */
 	for(let j = 0; j < COLORS.length; j++)
-		result.push(COLORS[j]+"-"+"zero");
+		result.push(COLORS[j]+"-zero");
 	return result;
 }
 
 /* Mapeia x e y no sprite */
-function card_positions(){
+function card_positions(RATIO){
 	const result = [];
 	for(let i = 0; i < 6; i++){
 		for(let j = 0; j < 10; j++){
-			const x = j === 9 ? 9.047 : j * CARD_WIDTH;
-			const y = i * CARD_HEIGHT;
+			const x = -j * CARD_WIDTH * RATIO;
+			const y = -i * CARD_HEIGHT * RATIO;
 			if(!(i === 5 && j > 5))
 				result.push({x, y});
 		}	
@@ -50,6 +50,15 @@ function card_positions(){
 
 function generate(){
 	const names = card_names();
-	const pos = card_positions();
-	return names.map((value, index) => ({name: value, x: pos[index].x, y: pos[index].y}));
+	const pos = [card_positions(0.4), card_positions(0.3)];
+	const map_l = new Map();
+	const map_s = new Map();
+	for(let i = 0; i < names.length; i++){
+		map_l.set(names[i], pos[0][i]);
+		map_s.set(names[i], pos[1][i]);
+	}
+	if(window.matchMedia("only screen and (max-width: 600px)").matches)
+		return map_s;
+	return map_l;
 }
+export default generate();

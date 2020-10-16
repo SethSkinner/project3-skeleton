@@ -5,7 +5,7 @@ mongoose.Promise = global.Promise;
 // DEV:  mongodb://localhost:27017/uno
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/project-3-practice"
 mongoose
-  .connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true  })
+  .connect(MONGODB_URI, { useNewUrlParser: true, useCreateIndex: true, seUnifiedTopology: true   })
   .then(() => console.log('MongoDB Connected...'))
 
 const Schema = mongoose.Schema;
